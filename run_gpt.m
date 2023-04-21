@@ -1,7 +1,7 @@
 clear
 clc
 %% Load weight files
-modelName = "gpt2-xl-mod";
+modelName = "gpt2-base";
 
 [~, files] = system("ls " + modelName + " | grep mat | sed 's/.mat//'");
 %                    show all files | files with mat | delete .mat suffix
@@ -17,17 +17,12 @@ for i = 1:length(files)
 end
 
 % define global variables
-if(modelName == "gpt2-base" || modelName == "gpt2-base-mod")
-    NUM_LAYERS = 12;
-else
-    if (modelName == "gpt2-large" || modelName == "gpt2-large-mod")
-    NUM_LAYERS = 48;
-    else
-    end
-end
+[NUM_LAYERS, d_model, dk, n_head] = Get_model_parameters(modelName);
 
 clear files
 %% Run GPT
+
+Question = "What is your name?";
 
 % define generation steps
 Steps = 20;
@@ -35,7 +30,7 @@ Steps = 20;
 % input Tokens start with empty array
 inputTokens = [];
 % initial input is loaded into the 'out' array for identical loop structure
-out = [2061,  318,  534, 1438,   30];
+out = bpe_encoding(Question);
 
 % Generation steps
 for i = 1:Steps
@@ -49,5 +44,6 @@ for i = 1:Steps
     out = Script_output;
 end
 
-%% Print output
-final_out = [inputTokens out]
+% Print output
+final_out = [inputTokens out];
+bpe_decoding(final_out)
