@@ -22,10 +22,10 @@ end
 clear files
 %% Run GPT
 
-Question = "What is your name?";
+Question = "What is your job?";
 
 % define generation steps
-Steps = 20;
+Steps = 15;
 
 % input Tokens start with empty array
 inputTokens = [];

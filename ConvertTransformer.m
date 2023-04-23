@@ -3,7 +3,7 @@ modelName = "gpt2-base";
 [Layers, d_model, dk, n_head] = Get_model_parameters(modelName);
 
 for i = 1:Layers
-    fileName = sprintf("%s/%s_layer_%02d.mat", modelName,modelName, i - 1);
+    fileName = sprintf("%s/layer_%02d.mat",modelName, i - 1);
     load(fileName);
     valName = sprintf("weights_layer_%02d", i - 1);
     weightName = valName + ".attn_c_attn_weight";
@@ -33,7 +33,7 @@ for i = 1:Layers
     b(d_model + 1:d_model * 2) = bk;
     eval(weightName + " = W;");
     eval(biasName + " = b;");
-    fileName = sprintf("%s-mod/%s_mod_layer_%02d.mat", modelName, modelName,i - 1);
+    fileName = sprintf("%s-mod/layer_%02d.mat", modelName,i - 1);
     save(fileName,valName);
     clear -regexp weights_layer
 end

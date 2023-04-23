@@ -20,6 +20,9 @@ for i = 1:NUM_LAYERS
     weight_name = sprintf("weights_layer_%02d", i - 1);
     % do transformer block
     temp = Block(eval(weight_name), temp);
+    if (i == 3)
+        outof1 = temp;
+    end
 end
 
 temp = LayerNorm(ln_f_weight, ln_f_bias, temp);
